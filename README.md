@@ -701,7 +701,8 @@ If you need it, here’s the [site/templates/thanks.php](./src/thanks.php) versi
 
 And here we are, ready to test our brand new ecommerce:
 
-[demo.webm](https://github.com/user-attachments/assets/ec101574-e021-4da1-b27d-db3a7350e1ec)
+[demo.webm](https://github.com/user-attachments/assets/1f7ac9ac-8400-47f9-8bc3-aecbf6838247)
+
 
 We've reached the end. Nothing lasts forever, they say. 
 

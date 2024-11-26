@@ -1,17 +1,17 @@
 - [1. Intro](#1-intro)
 - [2. Part 1: The Frontend](#2-part-1-the-frontend)
   - [2.1. Add RockCommerce](#21-add-rockcommerce)
-  - [2.2. (WIP) Installing](#22-wip-installing)
-  - [2.3. Add It to the Frontend](#23-add-it-to-the-frontend)
-  - [2.4. Add Products](#24-add-products)
-    - [2.4.1. Create the Product Template](#241-create-the-product-template)
-    - [2.4.2. Add a Product page](#242-add-a-product-page)
-    - [2.4.3. Convert the Product Page into a RockCommerce Product](#243-convert-the-product-page-into-a-rockcommerce-product)
-    - [2.4.4. Add Product Image and Description](#244-add-product-image-and-description)
-  - [2.5. Add Cart Features to Products](#25-add-cart-features-to-products)
-    - [2.5.1. Display Products in the Cart](#251-display-products-in-the-cart)
-    - [2.5.2. Add the Missing Data](#252-add-the-missing-data)
-    - [2.5.3. Populate the cart](#253-populate-the-cart)
+    - [2.1.1. (WIP) Installing](#211-wip-installing)
+    - [2.1.2. Add It to the Frontend](#212-add-it-to-the-frontend)
+  - [2.2. Add Products](#22-add-products)
+    - [2.2.1. Create the Product Template](#221-create-the-product-template)
+    - [2.2.2. Add a Product page](#222-add-a-product-page)
+    - [2.2.3. Convert the Product Page into a RockCommerce Product](#223-convert-the-product-page-into-a-rockcommerce-product)
+    - [2.2.4. Add Product Image and Description](#224-add-product-image-and-description)
+  - [2.3. Add Cart Features to Products](#23-add-cart-features-to-products)
+    - [2.3.1. Display Products in the Cart](#231-display-products-in-the-cart)
+    - [2.3.2. Add the Missing Data](#232-add-the-missing-data)
+    - [2.3.3. Populate the cart](#233-populate-the-cart)
 - [3. Part 2: The Payment](#3-part-2-the-payment)
   - [3.1. Use Mollie as a Payment Service Provider](#31-use-mollie-as-a-payment-service-provider)
     - [3.1.1. Install RockMollie](#311-install-rockmollie)
@@ -133,10 +133,10 @@ Your current setup should look something like this:
 
 ## 2.1. Add RockCommerce
 
-## 2.2. (WIP) Installing
+### 2.1.1. (WIP) Installing
 install rockcommerce, go to modules etc....
 
-## 2.3. Add It to the Frontend  
+### 2.1.2. Add It to the Frontend  
 
 With RockCommerce and its dependencies installed, we're just one step away from using it. In your `site/templates/home.php` add this script at the end of the `head` tag:  
 
@@ -163,11 +163,11 @@ This means the logic, flow and the interface are all up to us! It’s not one of
 So, now that we have the pasta, let's add some salsa:
 
 
-## 2.4. Add Products  
+## 2.2. Add Products  
 
 Unilaterally, I’ve decided we’re going to sell T-Shirts. Let’s set the foundation for our T-Shirt products by creating a product template.  
 
-### 2.4.1. Create the Product Template  
+### 2.2.1. Create the Product Template  
 
 1. Go to **Setup > Templates > Add New**.  
 2. Type `product` as the name of the template and click **Add Template**.  
@@ -176,7 +176,7 @@ Unilaterally, I’ve decided we’re going to sell T-Shirts. Let’s set the fou
 
 ---
 
-### 2.4.2. Add a Product page 
+### 2.2.2. Add a Product page 
 
 1. Head to the homepage of the admin panel and, in the page tree, click **Home > New**.  
 
@@ -187,7 +187,7 @@ Unilaterally, I’ve decided we’re going to sell T-Shirts. Let’s set the fou
 <img src="images/f-03.jpg" alt="Add Black T-Shirt page" width="60%">  
 
 
-### 2.4.3. Convert the Product Page into a RockCommerce Product
+### 2.2.3. Convert the Product Page into a RockCommerce Product
 
 To convert our product page into a RockCommerce product, we will use a Custom Page Class and the `\RockCommerce\Product` trait.
 
@@ -221,7 +221,7 @@ Congratulations—your product page is officially a RockCommerce product!
 
 ---
 
-### 2.4.4. Add Product Image and Description
+### 2.2.4. Add Product Image and Description
 
 The next thing to do is add an image and a description:
 
@@ -254,7 +254,7 @@ Also, please create another product:
 Finally, hit `publish` (or the road Jack!).
 
 
-## 2.5. Add Cart Features to Products
+## 2.3. Add Cart Features to Products
 
 So far, we’ve got RockCommerce running and two shiny products ready to sell. To give our future customers a smooth, AJAX-like shopping experience, actions like adding/removing products, updating the cart, and navigating through checkout will be powered by **Alpine**. Luckily, RockCommerce handles most of the heavy lifting for us.
 
@@ -308,7 +308,7 @@ The `rcAttributes()` method dynamically injects product data that Alpine uses to
 All of this happens just by adding `$product->rcAttributes()` and `@click='addToCart'` to our product. Neat!
 
 
-### 2.5.1. Display Products in the Cart
+### 2.3.1. Display Products in the Cart
 
 Alright, so far, so good, but we’re missing the products in the cart. First, let’s add some markup to get an idea of how it’ll look:
 
@@ -396,7 +396,7 @@ Notice anything? Yes, the `pic` and `description` are empty! That’s because Ro
 
 But no worries— with Processwire _you are always just a hook away from the solution_!
 
-### 2.5.2. Add the Missing Data  
+### 2.3.2. Add the Missing Data  
 
 Please create the file `site/rockcommerce.php` and add this hook:
 
@@ -462,7 +462,7 @@ Since the item array doesn't include the `pic` and `description` data we need, w
 This way, when the array is returned, it will contain all the original information, along with our custom data. Lit!
 
 
-### 2.5.3. Populate the cart
+### 2.3.3. Populate the cart
 
 Now that we have all the info, we can get rid of the dummy content and pull the real item properties (`item.title`, `item.pic`, etc.):
 

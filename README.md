@@ -686,7 +686,7 @@ If you need it, here’s the [site/templates/thanks.php](./src/thanks.php) versi
 
 And here we are, ready to test our brand new ecommerce:
 
-[demo.webm](https://github.com/user-attachments/assets/1f7ac9ac-8400-47f9-8bc3-aecbf6838247)
+[demo.webm](https://github.com/user-attachments/assets/16823fba-c3f2-467f-a39f-1379cd2c5c14)
 
 
 We've reached the end. Nothing lasts forever, they say. 

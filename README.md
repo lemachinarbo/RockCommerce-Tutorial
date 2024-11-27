@@ -183,7 +183,7 @@ Unilaterally, I’ve decided we’re going to sell T-Shirts. Let’s set the fou
 1. Go to **Setup > Templates > Add New**.  
 2. Type `product` as the name of the template and click **Add Template**.  
 
-<img src="images/f-02.jpg" alt="Add a product template" width="60%">  
+<img src="images/f-02.jpg" alt="Add a product template" width="100%">  
 
 ---
 
@@ -191,11 +191,11 @@ Unilaterally, I’ve decided we’re going to sell T-Shirts. Let’s set the fou
 
 1. Head to the homepage of the admin panel and, in the page tree, click **Home > New**.  
 
-<img src="images/f-04.jpg" alt="Add new page" width="40%">  
+<img src="images/f-04.jpg" alt="Add new page" width="50%">  
 
 2. Select the template `product`, give the page the title **Black T-Shirt**, and hit **Save + Publish**.  
 
-<img src="images/f-03.jpg" alt="Add Black T-Shirt page" width="60%">  
+<img src="images/f-03.jpg" alt="Add Black T-Shirt page" width="100%">  
 
 
 ### 2.2.3. Convert the Product Page into a RockCommerce Product
@@ -228,7 +228,7 @@ To prove it:
 
 Congratulations—your product page is officially a RockCommerce product!
 
-<img src="images/f-05.png" alt="New shop tab" width="60%">  
+<img src="images/f-05.png" alt="New shop tab" width="100%">  
 
 ---
 
@@ -239,12 +239,12 @@ The next thing to do is add an image and a description:
 1. Go to `Setup > Fields > Add New`. Label it `Product Image` and choose `Single Image` for the field type.
 2. Repeat the process for the description: Click `Setup > Fields > Add New`, label it `Product Description`, and select `Textarea` for the field type.
 
-<img src="images/f-06.png" alt="Create a new field" width="60%">
+<img src="images/f-06.png" alt="Create a new field" width="100%">
 
 
 Next, add the new fields to the product template by clicking `Setup > Templates > Product` and selecting the fields using the `Add Field` selector.
 
-<img src="images/f-07.png" alt="Add fields to the template" width="60%">
+<img src="images/f-07.png" alt="Add fields to the template" width="100%">
 
 
 Now, go to the Black T-Shirt product page and add the image, description, and price:

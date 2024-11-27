@@ -5,10 +5,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/css/uikit.min.css"
-    />
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/css/uikit.min.css" />
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/js/uikit-icons.min.js"></script>
+    <!-- RockCommerce JS -->
     <script
       src="<?= $config->urls
         ->siteModules ?>RockCommerce/dst/RockCommerce.min.js"
@@ -16,12 +18,20 @@
     ></script>
   </head>
   <body>
+    <header class="uk-navbar-container uk-padding-small">
+      <nav class="uk-container uk-container-small uk-flex ">
+        <div class="uk-navbar-left uk-text-bolder">🚀👕 RockTees</div>
+        <div class="uk-navbar-right">
+          <a href="#" class="uk-text-primary"> 
+            <span uk-icon="icon: bag"></span> Cart items: <span rc-cart-count></span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
     <main>
       <div class="uk-container uk-container-small uk-section">
-        
-        <!-- Store Title -->
-        <h1 id="title">T-Shirts</h1>
-        
+
         <div class="uk-grid uk-grid-column-medium">
         
           <!-- Products region -->
@@ -38,7 +48,7 @@
                 </div>
               <?php endforeach; ?>
 
-            </div>
+              </div>
           </div>
           
           <!-- Cart region -->
@@ -62,6 +72,7 @@
               </template>
               <hr class="uk-divider-small" />
               <p>Subtotal <span x-text="itemsNet"></span></p>
+                            
               <form method="post" action="/payment/">
                 <button
                   type="submit"
@@ -77,5 +88,6 @@
         </div>
       </div>
     </main>
+
   </body>
 </html>

@@ -34,7 +34,7 @@ Introducing:
 Jokes aside, yeah, we’re building a shopping cart using the brand-new, shiny, and absolutely lovely Bernhard module. Here’s what we’ll do:
 
 - **Frontend Store:** The interface to display, add, and remove products.
-- **Checkout and Payment:** And yes, we’ll process the cart products and handle the payment.
+- **Payment:** And yes, we’ll process the cart products and handle the payment.
 
 To start, please [create a fresh ProcessWire installation](https://processwire.com/docs/start/install/new/) using the blank profile. 
 Once you're done, come back here.  
@@ -56,16 +56,28 @@ Now, open `site/templates/home.php`, paste and save the following:
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/css/uikit.min.css" />
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/css/uikit.min.css" />
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/js/uikit-icons.min.js"></script>
+    <!-- Paste RockCommerce JS here -->
+    
   </head>
   <body>
+    <header class="uk-navbar-container uk-padding-small">
+      <nav class="uk-container uk-container-small uk-flex ">
+        <div class="uk-navbar-left uk-text-bolder">🚀👕 RockTees</div>
+        <div class="uk-navbar-right">
+          <a href="#" class="uk-text-primary"> 
+            <span uk-icon="icon: bag"></span> Cart items: X
+          </a>
+        </div>
+      </nav>
+    </header>
+
     <main>
       <div class="uk-container uk-container-small uk-section">
-        
-        <!-- Store Title -->
-        <h1 id="title">Title</h1>
         
         <div class="uk-grid uk-grid-column-medium">
         
@@ -78,24 +90,23 @@ Now, open `site/templates/home.php`, paste and save the following:
               Cart
             </div>
           </div>
-        
+          
         </div>
       </div>
     </main>
+    
   </body>
 </html>
+
 ```
 
-Nothing fancy here: We’re including UIkit in our head and defining the HTML skeleton with three regions: the _title_, the _products_, and the _cart_. 
+Nothing fancy here: We’re including UIkit in our head and defining the HTML skeleton with two regions:  the _products_, and the _cart_. 
 
 But, to get a better sense of how our shop will look, let's replace the content inside the `main` tag with some placeholder content:
 
 ```html
 <main>
   <div class="uk-container uk-container-small uk-section">
-    
-    <!-- Store Title -->
-    <h1 id="title">T-Shirts</h1>
     
     <div class="uk-grid uk-grid-column-medium">
     
@@ -127,7 +138,7 @@ But, to get a better sense of how our shop will look, let's replace the content 
 
 Your current setup should look something like this:  
 
-<img src="images/f-01.jpg" alt="Frontend with placeholders" width="100%">  
+<img src="images/f-01.png" alt="Frontend with placeholders" width="100%">  
 
 ---
 
@@ -138,7 +149,7 @@ install rockcommerce, go to modules etc....
 
 ### 2.1.2. Add It to the Frontend  
 
-With RockCommerce and its dependencies installed, we're just one step away from using it. In your `site/templates/home.php` add this script at the end of the `head` tag:  
+With RockCommerce and its dependencies installed, we're just one step away from using it. In your `site/templates/home.php` add this script at the end of the `head` tag instead of the `<!-- Paste RockCommerce JS here -->` message:  
 
 ```html
 <script
@@ -146,13 +157,13 @@ With RockCommerce and its dependencies installed, we're just one step away from 
     defer></script>
 ```
 
-Now, to test if it’s working, update the _Products added_ line in your cart region with this one, which includes the magic attribute `rc-cart-count`. This attribute helps us display how many products have been added to the cart:  
+Now, to test if it’s working, update the _Cart items: 0_ line in the `header` tag with this one, which includes the magic attribute `rc-cart-count`. This attribute helps us display how many products have been added to the cart:  
 
 ```html
-<p>Products added: <span rc-cart-count></span></p>
+<span uk-icon="icon: bag"></span> Cart items: <span rc-cart-count></span>
 ```
 
-Head to your browser, and if you see `Products added: 0`, congratulations, we’re set! If not... well, go back and check what you missed. That’s the charm of tutorials, isn’t it?
+Head to your browser, and if you see `Cart items: 0`, congratulations, we’re set! If not... well, go back and check what you missed. That’s the charm of tutorials, isn’t it?
 
 So, *What’s happening here?* In a nutshell, RockCommerce sets up endpoints on our website to handle products, carts, and orders. Then in the frontend it uses [Alpine](https://alpinejs.dev/) as a bridge to give us access to whatever product, cart, or order info we need.
 
@@ -281,7 +292,10 @@ Update the `Product` region in your `site/templates/home.php` file with the foll
 </div>
 ```
 
-Now reload the homepage, try adding some products. How cool is that?!
+Now reload the homepage, try adding some products, and the counter will change. How cool is that?!
+
+<img src="images/f-11.png" alt="Products layout" width="100%">
+
 
 But hold your horses! Let’s review what’s happening here:
 
@@ -607,10 +621,12 @@ And to finish, we are going to create a simple thanks page, by ripping of the la
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/css/uikit.min.css"
-    />
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/css/uikit.min.css" />
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/js/uikit-icons.min.js"></script>
+    <!-- RockCommerce JS -->
     <script
       src="<?= $config->urls
         ->siteModules ?>RockCommerce/dst/RockCommerce.min.js"
@@ -618,50 +634,20 @@ And to finish, we are going to create a simple thanks page, by ripping of the la
     ></script>
   </head>
   <body>
+    <header class="uk-navbar-container uk-padding-small">
+      <nav class="uk-container uk-container-small uk-flex ">
+        <div class="uk-navbar-left uk-text-bolder">🚀👕 RockTees</div>
+        <div class="uk-navbar-right">
+          <a href="#" class="uk-text-primary"> 
+            <span uk-icon="icon: bag"></span> Cart items: <span rc-cart-count></span>
+          </a>
+        </div>
+      </nav>
+    </header>
     <main>
       <div class="uk-container uk-container-small uk-section">
-        
-        <!-- Title -->
-        <h1 id="title">Thanks!</h1>
-        
-        <div class="uk-grid uk-grid-column-medium">
-        
-          <!-- Thanks region -->
-          <div id="content" class="uk-width-2-3">
-            <div class="uk-grid uk-grid-medium uk-child-width-expand">
-
-            <p>Your order will arrive in 2 hours. We are faster than Amazon!</p>
-
-            </div>
-          </div>
-          
-          <!-- Cart region -->
-          <div class="uk-width-1-3">
-            <div
-              id="cart"
-              class="uk-card uk-card-default uk-card-body"
-              x-data="RcCart"
-              rc-reload
-            >
-              <span rc-cart-reset><!-- This line resets the cart! --></span>
-
-              <p>Products added: <span rc-cart-count></span></p>
-              <template x-for="item in items">
-                <div class="uk-flex uk-text-small">
-                  <div class="uk-width-1-4"><img :src="item.pic" /></div>
-                  <div class="uk-width-3-4 uk-padding-small uk-padding-remove-top">
-                    <span x-text="`${item.title} x ${item.amount}`"></span><br />
-                    <span x-text="item.totalNet"></span><br />
-                    <a href="#" @click="deleteItem(item.id)">remove</a>
-                  </div>
-                </div>
-              </template>
-              <hr class="uk-divider-small" />
-              <p>Subtotal <span x-text="itemsNet"></span></p>
-            </div>
-          </div>
-        
-        </div>
+        <h1>Thanks a ton!</h1>
+        <p>Your order will arrive in 2 hours. 🚀 We are FasTees than Amazon! 🛍️</p>
       </div>
     </main>
   </body>
@@ -677,22 +663,21 @@ Next, return to the Admin home, and create a child page under Home with the name
 <img src="images/f-09.png" alt="Add new thanks page" width="100%"> 
 
 
-Go to your browser and visit the `/thanks/` page. You’ll notice that I left the cart there on purpose, just to show you one last trick. 
+Go to your browser and visit the `/thanks/` page. 
 
-Imagine our customer adds some T-shirts, goes through the payment process, and is redirected to the thanks page... but the cart still shows the products they added earlier. Weird, right?  
+<img src="images/f-12.png" alt="Thanks page" width="100%"> 
 
-<img src="images/f-10.png" alt="Thanks page" width="100%">  
+Nice! we hve our thanks page ready, but… did you noticed that the cart still have items? Weird. That’s because we never reset it! The products will stay there as long as the customer doesn’t clear their browser’s local storage. To fix it, we can use the `rc-cart-reset` magic attribute.
 
-That’s because we never reset the cart! The products stay there as long as the customer doesn’t clear their browser’s local storage. To fix it, we’ll use the `rc-cart-reset` magic attribute.
+You can place it anywhere, but let’s add it below our _delivery message_:
 
-You can place it anywhere, but let’s add it under the `<div id="cart">` on the thanks page:
-
-```php
+```html
+<p>Your order will arrive in 2 hours. 🚀 We are FasTees than Amazon! 🛍️</p>
 <!-- This line resets the cart! -->
 <span rc-cart-reset></span>
 ```
 
-Refresh your browser, and voilà! The cart is now reset.
+Refresh your browser, and voilà! The cart has been reset.
 
 If you need it, here’s the [site/templates/thanks.php](./src/thanks.php) version.
 

@@ -11,13 +11,16 @@ wire()->addHookAfter('Item::getJsonArray', function ($event) {
     return;
   }
 
-  if ($product->product_image) {
+  if ($product->rockcommerce_productfields->product_image) {
     // Add the product image URL if it exists
-    $data['pic'] = $product->product_image->width(60)->url;
+    $data['pic'] = $product->rockcommerce_productfields->product_image->width(
+      60
+    )->url;
   }
 
   // Add the product description if it's available
-  $data['description'] = $product->product_description ?? null;
+  $data['description'] =
+    $product->rockcommerce_productfields->product_description ?? null;
 
   // Set the modified data back to the event return
   $event->return = $data;

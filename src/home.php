@@ -10,20 +10,19 @@
     <!-- UIkit JS -->
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/js/uikit-icons.min.js"></script>
-    <!-- RockCommerce JS -->
+    <!-- Paste RockCommerce JS here -->
     <script
       src="<?= $config->urls
         ->siteModules ?>RockCommerce/dst/RockCommerce.min.js"
-      defer
-    ></script>
+      defer></script>
   </head>
   <body>
     <header class="uk-navbar-container uk-padding-small">
       <nav class="uk-container uk-container-small uk-flex ">
         <div class="uk-navbar-left uk-text-bolder">🚀👕 RockTees</div>
         <div class="uk-navbar-right">
-          <a href="#" class="uk-text-primary"> 
-            <span uk-icon="icon: bag"></span> Cart items: <span rc-cart-count></span>
+          <a href="#" class="uk-text-primary">
+          <span uk-icon="icon: bag"></span> Cart items: <span rc-cart-count></span>
           </a>
         </div>
       </nav>
@@ -33,16 +32,20 @@
       <div class="uk-container uk-container-small uk-section">
 
         <div class="uk-grid uk-grid-column-medium">
-        
+
           <!-- Products region -->
           <div id="products" class="uk-width-2-3">
             <div class="uk-grid uk-grid-medium uk-child-width-expand">
 
               <?php foreach (pages('template=product') as $product): ?>
                 <div <?= $product->rcAttributes() ?>>
-                  <img src="<?= $product->product_image->url ?>" />
+                  <!-- Updated image -->
+                  <img src="<?= $product->rockcommerce_productfields
+                    ->product_image->url ?>" />
                   <h2><?= $product->title ?></h2>
-                  <p><?= $product->product_description ?></p>
+                  <!-- New description -->
+                  <p><?= $product->rockcommerce_productfields
+                    ->product_description ?></p>
                   <p><strong><?= $product->rockcommerce_net ?></strong></p>
                   <a class="uk-button uk-button-primary" href="#" @click='addToCart'>Add to cart</a>
                 </div>
@@ -50,7 +53,7 @@
 
               </div>
           </div>
-          
+
           <!-- Cart region -->
           <div class="uk-width-1-3">
             <div
@@ -72,19 +75,9 @@
               </template>
               <hr class="uk-divider-small" />
               <p>Subtotal <span x-text="itemsNet"></span></p>
-                            
-              <form method="post" action="/payment/">
-                <button
-                  type="submit"
-                  :class="count ? 'uk-button-primary' : 'uk-button-default'"
-                  :disabled="!count"
-                  class="uk-button">
-                    Go to payment
-                </button>
-              </form>
             </div>
           </div>
-        
+
         </div>
       </div>
     </main>

@@ -1,24 +1,26 @@
 - [1. Intro](#1-intro)
-- [2. Part 1: The Frontend](#2-part-1-the-frontend)
-  - [2.1. Add RockCommerce](#21-add-rockcommerce)
-    - [2.1.1. (WIP) Installing](#211-wip-installing)
-    - [2.1.2. Add It to the Frontend](#212-add-it-to-the-frontend)
-  - [2.2. Add Products](#22-add-products)
-    - [2.2.1. Create the Product Template](#221-create-the-product-template)
-    - [2.2.2. Add a Product page](#222-add-a-product-page)
-    - [2.2.3. Convert the Product Page into a RockCommerce Product](#223-convert-the-product-page-into-a-rockcommerce-product)
+- [2. (WIP) Part 1: Installing RockCommerce](#2-wip-part-1-installing-rockcommerce)
+- [3. Part 2: Setup the store products and cart](#3-part-2-setup-the-store-products-and-cart)
+  - [3.1. Add RockCommerce to the Frontend](#31-add-rockcommerce-to-the-frontend)
+  - [3.2. Add Products](#32-add-products)
+    - [3.2.1. Create the Product Template](#321-create-the-product-template)
+    - [3.2.2. Add a Product page](#322-add-a-product-page)
+    - [3.2.3. Convert the Product Page into a RockCommerce Product](#323-convert-the-product-page-into-a-rockcommerce-product)
     - [2.2.4. Add Product Image and Description](#224-add-product-image-and-description)
-  - [2.3. Add Cart Features to Products](#23-add-cart-features-to-products)
-    - [2.3.1. Display Products in the Cart](#231-display-products-in-the-cart)
-    - [2.3.2. Add the Missing Data](#232-add-the-missing-data)
-    - [2.3.3. Populate the cart](#233-populate-the-cart)
-- [3. Part 2: The Payment](#3-part-2-the-payment)
-  - [3.1. Use Mollie as a Payment Service Provider](#31-use-mollie-as-a-payment-service-provider)
-    - [3.1.1. Install RockMollie](#311-install-rockmollie)
-  - [3.2. Processing the Payment](#32-processing-the-payment)
-  - [3.3. The Thanks Page](#33-the-thanks-page)
-- [4. Testing the shop](#4-testing-the-shop)
-- [5. Source](#5-source)
+  - [3.3. Add Cart Features to Products](#33-add-cart-features-to-products)
+    - [3.3.1. Display Products in the Cart](#331-display-products-in-the-cart)
+- [4. Part 3: The Payment](#4-part-3-the-payment)
+  - [4.1. Use Mollie as a Payment Service Provider](#41-use-mollie-as-a-payment-service-provider)
+    - [4.1.1. Install RockMollie](#411-install-rockmollie)
+  - [4.2. Processing the Payment](#42-processing-the-payment)
+  - [4.3. The Thanks Page](#43-the-thanks-page)
+  - [4.4. (WIP) Testing the payment](#44-wip-testing-the-payment)
+- [5. Bonus Track: Customize RockCommerce](#5-bonus-track-customize-rockcommerce)
+  - [5.1. Add Product Image and Description](#51-add-product-image-and-description)
+  - [5.2. Updating the products markup](#52-updating-the-products-markup)
+  - [5.3. Updating the cart products](#53-updating-the-cart-products)
+    - [5.3.1. Add the Missing Data](#531-add-the-missing-data)
+- [6. Source](#6-source)
 
 
 # 1. Intro
@@ -40,11 +42,13 @@ To start, please [create a fresh ProcessWire installation](https://processwire.c
 Once you're done, come back here.  
 
 
-# 2. Part 1: The Frontend  
+# 2. (WIP) Part 1: Installing RockCommerce
 
-The first step will be to set up the skeleton of our store, where we'll display the products and the cart. 
+# 3. Part 2: Setup the store products and cart
 
-For this demo, we’ll use [UIkit](https://getuikit.com/docs/introduction) to quickly style the store. Of course, you’re free to use your favorite styling framework (*cough* Tailwind) or even some custom old-fashioned CSS .  
+The first step is to set up the skeleton of our store, where we'll display the products and the cart. 
+
+For this demo, we’ll use [UIkit](https://getuikit.com/docs/introduction) to quickly style the store. Of course, you’re free to use your favorite styling framework (*cough* Tailwind) or even some custom old-fashioned CSS.
 
 Now, open `site/templates/home.php`, paste and save the following:  
 
@@ -70,7 +74,7 @@ Now, open `site/templates/home.php`, paste and save the following:
         <div class="uk-navbar-left uk-text-bolder">🚀👕 RockTees</div>
         <div class="uk-navbar-right">
           <a href="#" class="uk-text-primary"> 
-            <span uk-icon="icon: bag"></span> Cart items: X
+            <span uk-icon="icon: bag"></span> Cart items: XXX
           </a>
         </div>
       </nav>
@@ -82,15 +86,25 @@ Now, open `site/templates/home.php`, paste and save the following:
         <div class="uk-grid uk-grid-column-medium">
         
           <!-- Products region -->
-          <div id="products" class="uk-width-2-3">Products</div>
+          <div id="products" class="uk-width-2-3">
+            <div class="uk-grid uk-grid-medium uk-child-width-expand">
+              <div>
+                <img src="https://placehold.co/400x400/jpg" />
+                <h2>Product title</h2>
+                <p><strong>€ XXX</strong></p>
+                <a class="uk-button uk-button-primary" href="">Add to cart</a>
+              </div>
+            </div>
+          </div>
           
           <!-- Cart region -->
           <div class="uk-width-1-3">
             <div id="cart" class="uk-card uk-card-default uk-card-body">
-              Cart
+              <p>Products added: XXX</p>
+              <p>Subtotal € XXX</p>
             </div>
           </div>
-          
+        
         </div>
       </div>
     </main>
@@ -102,54 +116,20 @@ Now, open `site/templates/home.php`, paste and save the following:
 
 Nothing fancy here: We’re including UIkit in our head and defining the HTML skeleton with two regions:  the _products_, and the _cart_. 
 
-But, to get a better sense of how our shop will look, let's replace the content inside the `main` tag with some placeholder content:
-
-```html
-<main>
-  <div class="uk-container uk-container-small uk-section">
-    
-    <div class="uk-grid uk-grid-column-medium">
-    
-      <!-- Products region -->
-      <div id="products" class="uk-width-2-3">
-        <div class="uk-grid uk-grid-medium uk-child-width-expand">
-          <div>
-            <img src="https://placehold.co/400x400/jpg" />
-            <h2>Product title</h2>
-            <p>Product description.</p>
-            <p><strong>€ 30,00</strong></p>
-            <a class="uk-button uk-button-primary" href="">Add to cart</a>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Cart region -->
-      <div class="uk-width-1-3">
-        <div id="cart" class="uk-card uk-card-default uk-card-body">
-          <p>Products added: x</p>
-          <p>Subtotal € 0,00</p>
-        </div>
-      </div>
-    
-    </div>
-  </div>
-</main>
-```
-
 Your current setup should look something like this:  
 
-<img src="images/f-01.png" alt="Frontend with placeholders" width="100%">  
+<img src="images/f-01.png" alt="Frontend with placeholders" width="100%"> 
 
----
 
-## 2.1. Add RockCommerce
+Before we move on, please open the `site/config.php` file and comment out this line, which appends the `_main.php` template to any render templates. It's usually very useful, but for this demo, we won't be using it:
 
-### 2.1.1. (WIP) Installing
-install rockcommerce, go to modules etc....
+```php
+// $config->appendTemplateFile = '_main.php';
+```
 
-### 2.1.2. Add It to the Frontend  
+## 3.1. Add RockCommerce to the Frontend  
 
-With RockCommerce and its dependencies installed, we're just one step away from using it. In your `site/templates/home.php` add this script at the end of the `head` tag instead of the `<!-- Paste RockCommerce JS here -->` message:  
+With RockCommerce installed and our basic html ready, we're just one step away from using RockCommerce. In your `site/templates/home.php` add this script at the end of the `head` tag instead of the `<!-- Paste RockCommerce JS here -->` message:  
 
 ```html
 <script
@@ -157,13 +137,19 @@ With RockCommerce and its dependencies installed, we're just one step away from 
     defer></script>
 ```
 
-Now, to test if it’s working, update the _Cart items: 0_ line in the `header` tag with this one, which includes the magic attribute `rc-cart-count`. This attribute helps us display how many products have been added to the cart:  
+Now, to test if it’s working, update the _Cart items: XXX_ line in the `header` tag with this one, which includes the magic attribute `rc-cart-count`. This attribute helps us display how many products have been added to the cart:  
 
 ```html
 <span uk-icon="icon: bag"></span> Cart items: <span rc-cart-count></span>
 ```
 
-Head to your browser, and if you see `Cart items: 0`, congratulations, we’re set! If not... well, go back and check what you missed. That’s the charm of tutorials, isn’t it?
+And also, update add the Magic attribute to the cart region:
+
+```html
+<p>Products added: <span rc-cart-count></span></p>
+```
+
+Head to your browser, and if you see `Cart items: 0` in both sections, congratulations, we’re set! If not... well, go back and check what you missed. That’s the charm of tutorials, isn’t it?
 
 So, *What’s happening here?* In a nutshell, RockCommerce sets up endpoints on our website to handle products, carts, and orders. Then in the frontend it uses [Alpine](https://alpinejs.dev/) as a bridge to give us access to whatever product, cart, or order info we need.
 
@@ -174,20 +160,19 @@ This means the logic, flow and the interface are all up to us! It’s not one of
 So, now that we have the pasta, let's add some salsa:
 
 
-## 2.2. Add Products  
+## 3.2. Add Products  
 
 Unilaterally, I’ve decided we’re going to sell T-Shirts. Let’s set the foundation for our T-Shirt products by creating a product template.  
 
-### 2.2.1. Create the Product Template  
+### 3.2.1. Create the Product Template  
 
 1. Go to **Setup > Templates > Add New**.  
 2. Type `product` as the name of the template and click **Add Template**.  
 
 <img src="images/f-02.jpg" alt="Add a product template" width="100%">  
 
----
 
-### 2.2.2. Add a Product page 
+### 3.2.2. Add a Product page 
 
 1. Head to the homepage of the admin panel and, in the page tree, click **Home > New**.  
 
@@ -198,7 +183,7 @@ Unilaterally, I’ve decided we’re going to sell T-Shirts. Let’s set the fou
 <img src="images/f-03.jpg" alt="Add Black T-Shirt page" width="100%">  
 
 
-### 2.2.3. Convert the Product Page into a RockCommerce Product
+### 3.2.3. Convert the Product Page into a RockCommerce Product
 
 To convert our product page into a RockCommerce product, we will use a Custom Page Class and the `\RockCommerce\Product` trait.
 
@@ -249,23 +234,16 @@ Next, add the new fields to the product template by clicking `Setup > Templates 
 
 Now, go to the Black T-Shirt product page and add the image, description, and price:
 
-- **Image:** Download this [T-shirt image](https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg)
-- **Description:** Classic black basic tee, soft cotton, versatile and timeless.
-- **Price:** 30
+- **Title:** Aspen White T-Shirt  
+- **Price:** 40 (in the Shop tab)
 
 > Tip: By default, the currency is set to Euro. To change it, go to `Modules > Site > RockMoney`.
 
-Also, please create another product:
-
-- **Title:** Aspen White T-Shirt
-- **Description:** Clean white Aspen tee, soft cotton, perfect for any outfit.
-- **Image:** [Aspen T-shirt](https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-02.jpg)
-- **Price:** 40 (in the Shop tab)
 
 Finally, hit `publish` (or the road Jack!).
 
 
-## 2.3. Add Cart Features to Products
+## 3.3. Add Cart Features to Products
 
 So far, we’ve got RockCommerce running and two shiny products ready to sell. To give our future customers a smooth, AJAX-like shopping experience, actions like adding/removing products, updating the cart, and navigating through checkout will be powered by **Alpine**. Luckily, RockCommerce handles most of the heavy lifting for us.
 
@@ -280,9 +258,8 @@ Update the `Product` region in your `site/templates/home.php` file with the foll
 
     <?php foreach (pages('template=product') as $product): ?>
       <div <?= $product->rcAttributes() ?>>
-        <img src="<?= $product->product_image->url ?>" />
+        <img src="https://placehold.co/400x400/jpg" />
         <h2><?= $product->title ?></h2>
-        <p><?= $product->product_description ?></p>
         <p><strong><?= $product->rockcommerce_net ?></strong></p>
         <a class="uk-button uk-button-primary" href="#" @click='addToCart'>Add to cart</a>
       </div>
@@ -293,9 +270,6 @@ Update the `Product` region in your `site/templates/home.php` file with the foll
 ```
 
 Now reload the homepage, try adding some products, and the counter will change. How cool is that?!
-
-<img src="images/f-11.png" alt="Products layout" width="100%">
-
 
 But hold your horses! Let’s review what’s happening here:
 
@@ -322,9 +296,9 @@ The `rcAttributes()` method dynamically injects product data that Alpine uses to
 All of this happens just by adding `$product->rcAttributes()` and `@click='addToCart'` to our product. Neat!
 
 
-### 2.3.1. Display Products in the Cart
+### 3.3.1. Display Products in the Cart
 
-Alright, so far, so good, but we’re missing the products in the cart. First, let’s add some markup to get an idea of how it’ll look:
+Alright, so far, so good! Our customer can add products, but the products aren't showing up in the cart. Let’s add some markup to get a sense of how the cart will look:
 
 ```php
 <!-- Cart region -->
@@ -344,21 +318,21 @@ Alright, so far, so good, but we’re missing the products in the cart. First, l
           <img src="https://placehold.co/60x60/jpg" />
         </div>
         <div class="uk-width-3-4 uk-padding-small uk-padding-remove-top">
-          Black T-Shirt x 1<br />
-          € 30,00<br />
+          Black T-Shirt x XXX<br />
+          € XXX<br />
           <a href="#">remove</a>
         </div>
       </div>
     </template>
     <hr class="uk-divider-small" />
-    <p>Subtotal € 0,00</p>
+    <p>Subtotal € XXX</p>
   </div>
 </div>
 ```
 
 Go to your browser, refresh the page, add some products, and bam, there they are! our products with fake content!  
 
-I know that the UIkit classes and the product's fake description add a lot of visual noise, which could lead us to miss what’s important here, so let’s strip down the code and imagine it like this:
+I don't want us to miss what’s important here, so let’s strip down the code and imagine it like this:
 
 ```html
 <div
@@ -405,80 +379,7 @@ Here’s an example of what the logged data looks like:
     "totalGross": "€ 30,00"
 }
 ```
-
-Notice anything? Yes, the `pic` and `description` are empty! That’s because RockCommerce doesn’t know about our image or description fields… yet.  
-
-But no worries— with Processwire _you are always just a hook away from the solution_!
-
-### 2.3.2. Add the Missing Data  
-
-Please create the file `site/rockcommerce.php` and add this hook:
-
-```php
-<?php namespace ProcessWire;
-
-// Add a hook to modify the Items array
-wire()->addHookAfter('Item::getJsonArray', function ($event) {
-  $data = $event->return;
-
-  // Get the product page using the ID in the data
-  $product = wire()->pages->get($data['product']);
-  if (!$product->id) {
-    // Return if the product doesn't exist
-    return;
-  }
-
-  if ($product->product_image) {
-    // Add the product image URL if it exists
-    $data['pic'] = $product->product_image->width(60)->url;
-  }
-
-  // Add the product description if it's available
-  $data['description'] = $product->product_description ?? null;
-
-  // Set the modified data back to the event return
-  $event->return = $data;
-});
-```
-
-Reload the page, add some products―if you done have any in your cart, and check your console. 
-Now the cart data includes both image and description:
-
-```json
-{
-    "id": 1053,
-    "title": "Black T-Shirt",
-    "description": "Classic black basic tee, soft cotton, versatile and timeless.",
-    "product": 1034,
-    "amount": 1,
-    "variation": "",
-    "variationTableData": [],
-    "url": "/black-t-shirt/#-amount:1",
-    "shortUrl": "/black-t-shirt/",
-    "pic": "/site/assets/files/1034/product-page-01-related-product-01.60x0.jpg",
-    "itemNet": "€ 30,00",
-    "itemVat": "€ 0,00",
-    "itemGross": "€ 30,00",
-    "totalNet": "€ 30,00",
-    "totalVat": "€ 0,00",
-    "totalGross": "€ 30,00"
-}
-```
-
-Before we move on, let me explain what we did here.
-
-The `rockcommerce.php` file is a *hook file* provided by the module, where we can centralize all the hooks that modify RockCommerce's behavior.
-
-> **Tip**: If you're not familiar with hooks, pause here and check out the [Using Hooks in ProcessWire](https://processwire.com/docs/modules/hooks/) documentation.
-
-Since the item array doesn't include the `pic` and `description` data we need, we hooked into the `Item::getJsonArray` method and injected the image and description into the item array.
-
-This way, when the array is returned, it will contain all the original information, along with our custom data. Lit!
-
-
-### 2.3.3. Populate the cart
-
-Now that we have all the info, we can get rid of the dummy content and pull the real item properties (`item.title`, `item.pic`, etc.):
+Now we can use those properties to update our cart products. Please update the HTML in your cart region with this:
 
 ```php
 <!-- Cart region -->
@@ -491,8 +392,10 @@ Now that we have all the info, we can get rid of the dummy content and pull the 
   >
     <p>Products added: <span rc-cart-count></span></p>
     <template x-for="item in items">
-      <div class="uk-flex uk-text-small">
-        <div class="uk-width-1-4"><img :src="item.pic" /></div>
+      <div
+        x-init="console.log(item)" 
+        class="uk-flex uk-text-small">
+        <div class="uk-width-1-4"><img src="https://placehold.co/60x60/jpg" /></div>
         <div class="uk-width-3-4 uk-padding-small uk-padding-remove-top">
           <span x-text="`${item.title} x ${item.amount}`"></span><br />
           <span x-text="item.totalNet"></span><br />
@@ -508,7 +411,8 @@ Now that we have all the info, we can get rid of the dummy content and pull the 
 
 Head to your browser and test it. Now, we can fully add products and delete them! 
 
-And again, if we get rid of all the noise, the important thing we did was render the item properties, the cart total net `itemsNet`, and just like we did with `@click='addToCart'` to add products, we threw in the `@click="deleteItem(item.id)"` dispatcher to remove products without sweating.
+
+And again, if we clean up our code a bit, the key takeaways are: we rendered the item properties, displayed the cart total net (`itemsNet`), and, just like we used to add products, we included the `@click="deleteItem(item.id)"` dispatcher to remove products without sweating.
 
 ```php
 <template x-for="item in items">
@@ -525,7 +429,7 @@ And again, if we get rid of all the noise, the important thing we did was render
 <p>Subtotal <span x-text="itemsNet"></span></p>
 ```
 
-# 3. Part 2: The Payment
+# 4. Part 3: The Payment
 
 One of the things I feared most about the DIY e-commerce concept was: *Okay, how am I going to make payments work?*  
 
@@ -549,9 +453,9 @@ Under the cart region, right below the `<p>Subtotal <span x-text="itemsNet"></sp
 
 As you see, it’s a plain and simple form that doesn’t actually submit any data—it just triggers the `/payment/` page.
 
-## 3.1. Use Mollie as a Payment Service Provider
+## 4.1. Use Mollie as a Payment Service Provider
 
-For this demo, we’re going to integrate [Mollie](https://my.mollie.com/dashboard/signup) because it’s easy, and Bernhard already [created the module](https://processwire.com/talk/topic/30529-rockmollie-integrates-mollie-payments-into-processwire/).
+For this demo, we’re going to integrate [Mollie](https://my.mollie.com/dashboard/signup/2316011) (Affiliate-Link) because it’s easy, and Bernhard already [created the module](https://processwire.com/talk/topic/30529-rockmollie-integrates-mollie-payments-into-processwire/).
 
 1. Start by creating a Mollie account at [sign-up link](https://www.mollie.com/signup).
 2. Click "Online payments."
@@ -569,21 +473,41 @@ $config->moduleInstall('download', 'debug');
 $config->mollieApiKey = 'test_xxx'; //Paste your key here
 ```
 
-### 3.1.1. Install RockMollie
+### 4.1.1. Install RockMollie
 
 1. Go to `Modules > New` in the ProcessWire admin.
 2. Under `Add Module From Directory`, type `RockMollie`.
 3. Click on `Get Module info`, then `Download Now`, and click on `Install Now`.
 
-## 3.2. Processing the Payment
+## 4.2. Processing the Payment
 
-Okay, the logic here is pretty simple. When the customer hits the `Go to payment` button, we need to convert our cart products, into an order and pass the order information to Mollie so they can charge our customer. Then, Mollie will return the customer to our page and secretly pass us the hopefully-successful payment order information. 
+Okay, the logic here is pretty simple. When the customer hits the `Go to payment` button, we need to convert our cart products, into an order and pass the order information to Mollie so they can charge our customer. Then, Mollie will return the customer to our page and secretly pass us the hopefully-successful payment order information.
 
-Can you guess how much code we’d need to make that happen?
+Here's a markdown diagram that illustrates the flow: 
 
-Go to your RocCommerce Hook file `site/rockcommerce.php` file and paste this after the hook we added early:
+```mermaid
+flowchart TD
+    subgraph Website
+        A[Customer clicks Go to payment] --> B[Send order to Mollie]
+        D[Confirm order status]
+    end
+
+    B --> C[Mollie processes payment]
+    C --> D
+
+```
+
+Can you guess how much code we’d need to make that happen? Let's find out:
+
+First, Please create the file `site/rockcommerce.php`. This file is a *hook file* provided by the module, where we can centralize all the hooks that modify RockCommerce's behavior.
+
+> **Tip**: If you're not familiar with hooks, pause here and check out the [Using Hooks in ProcessWire](https://processwire.com/docs/modules/hooks/) documentation.
+
+Now that we have it, let's paste our first hook:
 
 ```php
+<?php namespace ProcessWire;
+
 // Add a hook to handle form submissions at the '/payment/' URL
 wire()->addHook('/payment/', function ($event) {
   // Create a new order using RockCommerce cart
@@ -601,15 +525,12 @@ wire()->addHook('/payment/', function ($event) {
 });
 ```
 
-And… that’s it. Really. 
+Second… no, there's no second step, just this hook. Really. 
+I know! is so simple, yet powerful! 
 
-As simple as that.
+Let me explain: First we intercept the URL `/payment/` request, using a [URL/Path hook](https://processwire.com/docs/modules/hooks/#url-path-hooks), so we dont need to create and extra payment page. Then we create a RockCommerce order, and with the order, we create a payment and pass `/thanks` as our redirection success page. And finally, we redirect the user to Mollie.
 
-This hook is so simple, but powerful! First we intercept the URL `/payment/` request, using a [URL/Path hook](https://processwire.com/docs/modules/hooks/#url-path-hooks), so we dont need to create and extra payment page. Then we create a RockCommerce order, and with the order, we create a payment and pass `/thanks` as our redirection success page. And finally, we redirect the user to Mollie.
-
-Here’s the [site/rockcommerce.php](./src/rockcommerce.php) version if you just want to copy and paste the whole code
-
-## 3.3. The Thanks Page
+## 4.3. The Thanks Page
 
 And to finish, we are going to create a simple thanks page, by ripping of the layout of our Home page. Please create a new file `site/templates/thanks.php` and paste this:
 
@@ -679,19 +600,206 @@ You can place it anywhere, but let’s add it below our _delivery message_:
 
 Refresh your browser, and voilà! The cart has been reset.
 
-If you need it, here’s the [site/templates/thanks.php](./src/thanks.php) version.
 
+## 4.4. (WIP) Testing the payment
 
-# 4. Testing the shop
+And FINALLY! we can test our brand new ecommerce:
 
 And here we are, ready to test our brand new ecommerce:
 
 [demo.webm](https://github.com/user-attachments/assets/16823fba-c3f2-467f-a39f-1379cd2c5c14)
 
+# 5. Bonus Track: Customize RockCommerce
 
-We've reached the end. Nothing lasts forever, they say. 
+So, you thought I was going to leave you with a demo store without product photos? Come on! We act like RockStars here — we leave the best for the end of the concert!
 
-# 5. Source
+If you noticed, by default, RockCommerce doesn’t force you to define products in any specific way. How they look or which fields they have is totally up to you, just like any ProcessWire page.
+
+Which means, if we want to add product information, we first need to create the fields, attach them to the template, and then populate them..
+
+
+## 5.1. Add Product Image and Description
+
+To add an image and a description:
+
+1. Go to `Setup > Fields > Add New`. Label it `Product Image` and choose `Single Image` for the field type.
+2. Repeat the process for the description: Click `Setup > Fields > Add New`, label it `Product Description`, and select `Textarea` for the field type.
+
+<img src="images/f-06.png" alt="Create a new field" width="60%">
+
+
+RockCommerce provides a repeater that will help us contain all of our custom fields. So, the easiest way to add these fields to a template is to open a product, like the `Black T-Shirt`, click on the `Shop Tab`, and then click the `here` link under the `Custom fields` section.
+
+<img src="images/f-13.png" alt="Add fields to the template" width="60%">
+
+Add the new fields using the `Add Select` option, and hit `Save`.
+
+<img src="images/f-07.png" alt="Add fields to the template" width="60%">
+
+
+Now, we can populate the product information. Go to the `Black T-Shirt` product page and add the image and description:
+
+- **Image:** [Black T-shirt image](https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg)
+- **Description:** Classic black basic tee, soft cotton, versatile and timeless.
+- **Price:** 30
+
+And the same for the Aspen White T-Shirt:
+
+- **Description:** Clean white Aspen tee, soft cotton, perfect for any outfit.
+- **Image:** [Aspen T-shirt](https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-02.jpg)
+
+And save them.
+
+## 5.2. Updating the products markup
+
+We have access the new fields via the repeater, eg: `rockcommerce_productfields->product_description`. Lets add both image and description to the template:
+
+```html
+<!-- Products region -->
+<div id="products" class="uk-width-2-3">
+  <div class="uk-grid uk-grid-medium uk-child-width-expand">
+
+    <?php foreach (pages('template=product') as $product): ?>
+      <div <?= $product->rcAttributes() ?>>
+        <!-- Updated image -->
+        <img src="<?= $product->rockcommerce_productfields->product_image->url ?>" />
+        <h2><?= $product->title ?></h2>
+        <!-- New description -->
+        <p><?= $product->rockcommerce_productfields->product_description ?></p>
+        <p><strong><?= $product->rockcommerce_net ?></strong></p>
+        <a class="uk-button uk-button-primary" href="#" @click='addToCart'>Add to cart</a>
+      </div>
+    <?php endforeach; ?>
+
+    </div>
+</div>
+```
+
+Just regular Proceswire stuff until here.
+
+
+## 5.3. Updating the cart products
+
+To update the product image in the cart, we cannot use the same approach, because remember it is managed by Alpine, so we depend on the information available through the Items array object.
+
+Go again to the console and inspect the item object. Notice anything? Yes, the `pic` and `description` are empty! That’s because RockCommerce doesn’t know about our image or description fields… yet.  
+
+But no worries— with Processwire _you are always just a hook away from the solution_!
+
+```json
+{
+    "id": 1053,
+    "title": "Black T-Shirt",
+    "description": "",
+    "product": 1034,
+    "amount": 1,
+    "variation": "",
+    "variationTableData": [],
+    "url": "/black-t-shirt/#-amount:1",
+    "shortUrl": "/black-t-shirt/",
+    "pic": "",
+    "itemNet": "€ 30,00",
+    "itemVat": "€ 0,00",
+    "itemGross": "€ 30,00",
+    "totalNet": "€ 30,00",
+    "totalVat": "€ 0,00",
+    "totalGross": "€ 30,00"
+}
+```
+
+### 5.3.1. Add the Missing Data  
+
+Inside the file `site/rockcommerce.php`, add this hook:
+
+```php
+// Add a hook to modify the Items array
+wire()->addHookAfter('Item::getJsonArray', function ($event) {
+  $data = $event->return;
+
+  // Get the product page using the ID in the data
+  $product = wire()->pages->get($data['product']);
+  if (!$product->id) {
+    // Return if the product doesn't exist
+    return;
+  }
+
+  if ($product->rockcommerce_productfields->product_image) {
+    // Add the product image URL if it exists
+    $data['pic'] = $product->rockcommerce_productfields->product_image->width(
+      60
+    )->url;
+  }
+
+  // Add the product description if it's available
+  $data['description'] =
+    $product->rockcommerce_productfields->product_description ?? null;
+
+  // Set the modified data back to the event return
+  $event->return = $data;
+});
+```
+
+Reload the page, add some products―if you done have any in your cart, and check your console. 
+Now the item data includes both image and description:
+
+```json
+{
+    "id": 1053,
+    "title": "Black T-Shirt",
+    "description": "Classic black basic tee, soft cotton, versatile and timeless.",
+    "product": 1034,
+    "amount": 1,
+    "variation": "",
+    "variationTableData": [],
+    "url": "/black-t-shirt/#-amount:1",
+    "shortUrl": "/black-t-shirt/",
+    "pic": "/site/assets/files/1034/product-page-01-related-product-01.60x0.jpg",
+    "itemNet": "€ 30,00",
+    "itemVat": "€ 0,00",
+    "itemGross": "€ 30,00",
+    "totalNet": "€ 30,00",
+    "totalVat": "€ 0,00",
+    "totalGross": "€ 30,00"
+}
+```
+
+All that's left is to update the placeholder image with `item.pic` and remove the console message:
+
+```html
+<!-- Cart region -->
+<div class="uk-width-1-3">
+  <div
+    id="cart"
+    class="uk-card uk-card-default uk-card-body"
+    x-data="RcCart"
+    rc-reload
+  >
+    <p>Products added: <span rc-cart-count></span></p>
+    <template x-for="item in items">
+      <div class="uk-flex uk-text-small">
+        <div class="uk-width-1-4"><img :src="item.pic" /></div>
+        <div class="uk-width-3-4 uk-padding-small uk-padding-remove-top">
+          <span x-text="`${item.title} x ${item.amount}`"></span><br />
+          <span x-text="item.totalNet"></span><br />
+          <a href="#" @click="deleteItem(item.id)">remove</a>
+        </div>
+      </div>
+    </template>
+    <hr class="uk-divider-small" />
+    <p>Subtotal <span x-text="itemsNet"></span></p>
+  </div>
+</div>
+```
+
+That looks good!
+
+<img src="images/f-14.png" alt="The finished store" width="100%">  
+
+
+Now that we learned how to customize RockCommerce, we can say goodbye.
+Nothing lasts forever, they say. 
+
+# 6. Source
 
 Just in case something isn’t working on, here are the final versions of our files, so you can copy and paste them.
 

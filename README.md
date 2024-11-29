@@ -6,7 +6,6 @@
     - [3.2.1. Create the Product Template](#321-create-the-product-template)
     - [3.2.2. Add a Product page](#322-add-a-product-page)
     - [3.2.3. Convert the Product Page into a RockCommerce Product](#323-convert-the-product-page-into-a-rockcommerce-product)
-    - [2.2.4. Add Product Image and Description](#224-add-product-image-and-description)
   - [3.3. Add Cart Features to Products](#33-add-cart-features-to-products)
     - [3.3.1. Display Products in the Cart](#331-display-products-in-the-cart)
 - [4. Part 3: The Payment](#4-part-3-the-payment)
@@ -169,7 +168,7 @@ Unilaterally, I’ve decided we’re going to sell T-Shirts. Let’s set the fou
 1. Go to **Setup > Templates > Add New**.  
 2. Type `product` as the name of the template and click **Add Template**.  
 
-<img src="images/f-02.jpg" alt="Add a product template" width="100%">  
+<img src="images/f-02.jpg" alt="Add a product template" width="100%"> 
 
 
 ### 3.2.2. Add a Product page 
@@ -215,24 +214,8 @@ Congratulations—your product page is officially a RockCommerce product!
 
 <img src="images/f-05.png" alt="New shop tab" width="100%">  
 
----
 
-### 2.2.4. Add Product Image and Description
-
-The next thing to do is add an image and a description:
-
-1. Go to `Setup > Fields > Add New`. Label it `Product Image` and choose `Single Image` for the field type.
-2. Repeat the process for the description: Click `Setup > Fields > Add New`, label it `Product Description`, and select `Textarea` for the field type.
-
-<img src="images/f-06.png" alt="Create a new field" width="100%">
-
-
-Next, add the new fields to the product template by clicking `Setup > Templates > Product` and selecting the fields using the `Add Field` selector.
-
-<img src="images/f-07.png" alt="Add fields to the template" width="100%">
-
-
-Now, go to the Black T-Shirt product page and add the image, description, and price:
+So, to wrap up our products, enter `30` (or whatever value you prefer) as the price of our Black T-Shirt in the `Net Price` field. Then, please create another product:
 
 - **Title:** Aspen White T-Shirt  
 - **Price:** 40 (in the Shop tab)
@@ -605,9 +588,8 @@ Refresh your browser, and voilà! The cart has been reset.
 
 And FINALLY! we can test our brand new ecommerce:
 
-And here we are, ready to test our brand new ecommerce:
-
-[demo.webm](https://github.com/user-attachments/assets/16823fba-c3f2-467f-a39f-1379cd2c5c14)
+<!-- Todo: Update the video -->
+[demo.webm](https://github.com/user-attachments/assets/1f7ac9ac-8400-47f9-8bc3-aecbf6838247)
 
 # 5. Bonus Track: Customize RockCommerce
 
